@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.5.33530.505
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EcommAlgebra", "EcommAlgebra\EcommAlgebra.csproj", "{A6C2B2CC-1B52-4868-A920-27FE83BC3505}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{A6C2B2CC-1B52-4868-A920-27FE83BC3505}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A6C2B2CC-1B52-4868-A920-27FE83BC3505}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A6C2B2CC-1B52-4868-A920-27FE83BC3505}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A6C2B2CC-1B52-4868-A920-27FE83BC3505}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {4B21F871-DA0A-437A-AD48-56B6BA65C093}
+	EndGlobalSection
+EndGlobal
