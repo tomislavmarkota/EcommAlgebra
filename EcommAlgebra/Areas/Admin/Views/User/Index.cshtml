@@ -18,6 +18,9 @@
             <th>
                 Last name
             </th>
+            <th>
+                Edit
+            </th>
         </tr>
     </thead>
     <tbody>
@@ -28,6 +31,9 @@
                 <td>@user.Email</td>
                 <td>@user.FirstName</td>
                 <td>@user.LastName</td>
+                <td>
+                    <a class="btn btn-warning" asp-action="Update" asp-route-id="@user.Id">Edit</a>
+                </td>
             </tr>
         }
     </tbody>
