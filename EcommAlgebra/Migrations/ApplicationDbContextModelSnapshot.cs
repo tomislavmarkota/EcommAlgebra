@@ -17,7 +17,7 @@ namespace EcommAlgebra.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "6.0.15")
+                .HasAnnotation("ProductVersion", "6.0.20")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
@@ -125,8 +125,15 @@ namespace EcommAlgebra.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "dc78b1a6-bc96-43b2-871c-eeb2dc916961",
-                            ConcurrencyStamp = "9d55b0ac-8800-4c05-ae66-49f92ef602f7",
+                            Id = "3f3d7239-54be-430f-b61a-028a03ae0a0e",
+                            ConcurrencyStamp = "3dd08bc3-a8f4-49e9-8135-34d33320a0db",
+                            Name = "Editor",
+                            NormalizedName = "EDITOR"
+                        },
+                        new
+                        {
+                            Id = "bbd81b4c-80c0-401c-8011-420fca5d0769",
+                            ConcurrencyStamp = "20fef95e-7503-4d73-a851-3736c57ed7c8",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         });

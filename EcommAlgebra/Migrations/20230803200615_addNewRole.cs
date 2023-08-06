@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace EcommAlgebra.Migrations
 {
-    public partial class initial : Migration
+    public partial class addNewRole : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -160,7 +160,12 @@ namespace EcommAlgebra.Migrations
             migrationBuilder.InsertData(
                 table: "AspNetRoles",
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
-                values: new object[] { "dc78b1a6-bc96-43b2-871c-eeb2dc916961", "9d55b0ac-8800-4c05-ae66-49f92ef602f7", "Admin", "ADMIN" });
+                values: new object[] { "3f3d7239-54be-430f-b61a-028a03ae0a0e", "3dd08bc3-a8f4-49e9-8135-34d33320a0db", "Editor", "EDITOR" });
+
+            migrationBuilder.InsertData(
+                table: "AspNetRoles",
+                columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
+                values: new object[] { "bbd81b4c-80c0-401c-8011-420fca5d0769", "20fef95e-7503-4d73-a851-3736c57ed7c8", "Admin", "ADMIN" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",

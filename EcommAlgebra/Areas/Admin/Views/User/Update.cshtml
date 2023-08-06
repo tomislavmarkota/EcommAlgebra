@@ -1,9 +1,10 @@
 ﻿@using EcommAlgebra.Data
-@model ApplicationUser 
+@model UserViewModel 
 
 <h2>Editing user : @Model.FirstName @Model.LastName</h2>
 
 <form method="post" asp-action="Update">
+    <input asp-for="UserId" type="hidden" />
     <div class="form-group col-6">
         <label asp-for="FirstName" class="control-label"></label>
         <input asp-for="FirstName" placeholder="Enter first name..." class="form-control"/>
@@ -24,6 +25,15 @@
         <input asp-for="Address" placeholder="Enter address..." class="form-control" />
         <span asp-validation-for="Address" class="text-danger"></span>
     </div>
+
+    <div class="form-group col-6">
+        <label asp-for="SelectedRole" class="control-label"></label>
+        <select asp-for="SelectedRole" asp-items="@Model.AvailableRoles.Select(r => new SelectListItem { Value = r.Name, Text = r.Name })" class="form-control">
+        </select>
+        <span asp-validation-for="SelectedRole" class="text-danger"></span>
+    </div>
+ 
+
     <input class="btn btn-primary mt-4" type="submit" value="Update"/>
 
 </form>

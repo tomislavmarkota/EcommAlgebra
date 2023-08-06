@@ -15,7 +15,9 @@ namespace EcommAlgebra.Data
         {
             base.OnModelCreating(builder);
 
+            builder.Entity<IdentityRole>().HasData(new IdentityRole() { Name = "Editor", NormalizedName = "EDITOR" });
             builder.Entity<IdentityRole>().HasData(new IdentityRole() { Name = "Admin", NormalizedName = "ADMIN" });
+            
         }
     }
 
@@ -24,5 +26,6 @@ namespace EcommAlgebra.Data
         public string? FirstName { get; set; }
         public string? LastName { get; set; }
         public string? Address { get; set; }
+     
     }
 }
