@@ -125,17 +125,24 @@ namespace EcommAlgebra.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "3f3d7239-54be-430f-b61a-028a03ae0a0e",
-                            ConcurrencyStamp = "3dd08bc3-a8f4-49e9-8135-34d33320a0db",
+                            Id = "cb5a35d9-0fd2-4fd1-982a-2851f56fa28c",
+                            ConcurrencyStamp = "64d2a0b3-bd6d-4ab9-8439-ed5f4cb38b76",
                             Name = "Editor",
                             NormalizedName = "EDITOR"
                         },
                         new
                         {
-                            Id = "bbd81b4c-80c0-401c-8011-420fca5d0769",
-                            ConcurrencyStamp = "20fef95e-7503-4d73-a851-3736c57ed7c8",
+                            Id = "a3c76568-0602-4774-b052-d9b185d138e6",
+                            ConcurrencyStamp = "c291bc58-1bef-40d2-aecf-dc6680909e6d",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
+                        },
+                        new
+                        {
+                            Id = "4953c498-ca8e-4c1d-afee-2c4fa63cd46d",
+                            ConcurrencyStamp = "cabc0627-881b-43eb-a7ed-f10c58609503",
+                            Name = "User",
+                            NormalizedName = "USER"
                         });
                 });
 

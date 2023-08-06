@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace EcommAlgebra.Migrations
 {
-    public partial class addNewRole : Migration
+    public partial class initial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -160,12 +160,17 @@ namespace EcommAlgebra.Migrations
             migrationBuilder.InsertData(
                 table: "AspNetRoles",
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
-                values: new object[] { "3f3d7239-54be-430f-b61a-028a03ae0a0e", "3dd08bc3-a8f4-49e9-8135-34d33320a0db", "Editor", "EDITOR" });
+                values: new object[] { "4953c498-ca8e-4c1d-afee-2c4fa63cd46d", "cabc0627-881b-43eb-a7ed-f10c58609503", "User", "USER" });
 
             migrationBuilder.InsertData(
                 table: "AspNetRoles",
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
-                values: new object[] { "bbd81b4c-80c0-401c-8011-420fca5d0769", "20fef95e-7503-4d73-a851-3736c57ed7c8", "Admin", "ADMIN" });
+                values: new object[] { "a3c76568-0602-4774-b052-d9b185d138e6", "c291bc58-1bef-40d2-aecf-dc6680909e6d", "Admin", "ADMIN" });
+
+            migrationBuilder.InsertData(
+                table: "AspNetRoles",
+                columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
+                values: new object[] { "cb5a35d9-0fd2-4fd1-982a-2851f56fa28c", "64d2a0b3-bd6d-4ab9-8439-ed5f4cb38b76", "Editor", "EDITOR" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",

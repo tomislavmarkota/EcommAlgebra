@@ -15,18 +15,19 @@ namespace EcommAlgebra.Areas.Admin.Controllers
     {
         ApplicationDbContext _context;
         private readonly RoleManager<IdentityRole> _roleManager;
+        private UserManager<ApplicationUser> _userManager;
 
-        public UserController(ApplicationDbContext context, RoleManager<IdentityRole> roleManager)
+        public UserController(ApplicationDbContext context, RoleManager<IdentityRole> roleManager, UserManager<ApplicationUser> userManager)
         {
             _context = context;
             _roleManager = roleManager;
+            _userManager = userManager;
         }
+
+
+   
         public IActionResult Index()
         {
-            //var users = _context.Users.ToList();
-
-            //return View(users);
-
             var users = _context.Users.ToList();
             var viewModelList = new List<UserViewModel>();
 
@@ -58,22 +59,60 @@ namespace EcommAlgebra.Areas.Admin.Controllers
             return View(viewModelList);
         }
 
+        public IActionResult Create()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Create(ApplicationUser model)
+        {
+            if (ModelState.IsValid)
+            {
+                // Create a new ApplicationUser based on the ViewModel data
+                var user = new ApplicationUser
+                {
+                    FirstName = model.FirstName,
+                    LastName = model.LastName,
+                    Email = model.Email,
+                    UserName = model.Email, // We use the email as the username for simplicity
+                    Address = model.Address
+                };
+
+                // Create the user in the database
+                var result = await _userManager.CreateAsync(user, model.PasswordHash);
+
+                if (result.Succeeded)
+                {
+                    // Optionally, you can assign roles to the new user here
+                    // For example, if you want to set the user as an "Admin" by default, you can do:
+                    // await _userManager.AddToRoleAsync(user, "Admin");
+                    // This requires you to have already created the "Admin" role.
+
+                    // Initialize the user role (assuming you have a "User" role already created)
+                    await _userManager.AddToRoleAsync(user, "User");
+
+                    // Redirect to a success page or the list of users
+                    return RedirectToAction(nameof(Index));
+                }
+
+                // If there are errors, add them to ModelState and show them to the user
+                foreach (var error in result.Errors)
+                {
+                    ModelState.AddModelError("", error.Description);
+                }
+            }
+
+            // If ModelState is not valid, return to the same view with the provided data
+            return RedirectToAction(nameof(Index));
+        }
+
+
+
+
+
+
         public IActionResult Update(string id) {
-
-            //var user = _context.Users.FirstOrDefault(u => u.Id == id);
-            //if (user == null) return NotFound();
-
-            //var viewModel = new UserViewModel
-            //{
-            //    UserId = user.Id,
-            //    FirstName = user.FirstName,
-            //    LastName = user.LastName,
-            //    Email = user.Email,
-            //    Address = user.Address,
-            //    AvailableRoles = _roleManager.Roles.ToList()
-            //};
-            //return View(viewModel);
-
             var user = _context.Users.FirstOrDefault(u => u.Id == id);
             if (user == null) return NotFound();
 
