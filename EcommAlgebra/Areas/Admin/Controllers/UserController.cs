@@ -84,11 +84,6 @@ namespace EcommAlgebra.Areas.Admin.Controllers
 
                 if (result.Succeeded)
                 {
-                    // Optionally, you can assign roles to the new user here
-                    // For example, if you want to set the user as an "Admin" by default, you can do:
-                    // await _userManager.AddToRoleAsync(user, "Admin");
-                    // This requires you to have already created the "Admin" role.
-
                     // Initialize the user role (assuming you have a "User" role already created)
                     await _userManager.AddToRoleAsync(user, "User");
 
