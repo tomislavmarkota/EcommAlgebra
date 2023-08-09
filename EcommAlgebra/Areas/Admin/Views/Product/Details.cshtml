@@ -1,0 +1,46 @@
+﻿@model Product
+
+<h1>Product details</h1>
+
+<hr />
+<div class="row">
+    <dl class="col-sm-2">
+        @Html.DisplayNameFor(model => model.Title)
+    </dl>
+    <dl class="col-sm-10">
+        @Html.DisplayFor(model => model.Title)
+    </dl>
+    <dl class="col-sm-2">
+        @Html.DisplayNameFor(model => model.Description)
+    </dl>
+    <dl class="col-sm-10">
+        @Html.DisplayFor(model => model.Description)
+    </dl>
+    <dl class="col-sm-2">
+        @Html.DisplayNameFor(model => model.Price)
+    </dl>
+    <dl class="col-sm-10">
+        @Html.DisplayFor(model => model.Price)
+    </dl>
+    <dl class="col-sm-6">
+        @if (string.IsNullOrEmpty(Model.ImageName))
+        {
+            <div style="max-width: 250px; max-height: 250px; height: 100%;">
+                <img src="@("~/Images/no-image.png")" asp-append-version="true" style="max-height: 100%; max-width: 100%; object-fit: cover;" class="rounded" />
+            </div>
+           
+        }
+        else
+        {
+             <div style="max-width: 250px; max-height: 250px; height: 100%;">
+                <img src="@("~/Images/"+Model.ImageName)" asp-append-version="true" style="max-height: 100%; max-width: 100%; object-fit: cover;" class="rounded" />
+             </div>
+
+        }
+    </dl>
+</div>
+
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a>
+    <a asp-action="Index">Back to product list</a>
+</div>

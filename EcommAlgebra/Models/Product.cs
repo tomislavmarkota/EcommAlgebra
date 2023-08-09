@@ -21,7 +21,7 @@ namespace EcommAlgebra.Models
         public string? ImageName { get; set; }
 
         [NotMapped]
-        public IFormFile ImageFile { get; set; }
+        public IFormFile? ImageFile { get; set; }
 
         [ForeignKey("ProductId")]
         public List<ProductCategory>? ProductCategories { get; set; }
