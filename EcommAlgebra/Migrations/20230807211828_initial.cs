@@ -28,8 +28,8 @@ namespace EcommAlgebra.Migrations
                 columns: table => new
                 {
                     Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    FirstName = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    LastName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    FirstName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    LastName = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Address = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     UserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     NormalizedUserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
@@ -49,6 +49,22 @@ namespace EcommAlgebra.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_AspNetUsers", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Products",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Title = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Price = table.Column<decimal>(type: "decimal(9,2)", nullable: false),
+                    ImageName = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Products", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -157,20 +173,40 @@ namespace EcommAlgebra.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
-            migrationBuilder.InsertData(
-                table: "AspNetRoles",
-                columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
-                values: new object[] { "4953c498-ca8e-4c1d-afee-2c4fa63cd46d", "cabc0627-881b-43eb-a7ed-f10c58609503", "User", "USER" });
+            migrationBuilder.CreateTable(
+                name: "ProductCategory",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    CategoryId = table.Column<int>(type: "int", nullable: false),
+                    ProductId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ProductCategory", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_ProductCategory_Products_ProductId",
+                        column: x => x.ProductId,
+                        principalTable: "Products",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
 
             migrationBuilder.InsertData(
                 table: "AspNetRoles",
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
-                values: new object[] { "a3c76568-0602-4774-b052-d9b185d138e6", "c291bc58-1bef-40d2-aecf-dc6680909e6d", "Admin", "ADMIN" });
+                values: new object[,]
+                {
+                    { "ae520a59-0b53-4a2d-9eeb-8ce803ae0dcf", "e6d24b71-659e-4b0a-ac1a-21e8b5bc1d78", "Admin", "ADMIN" },
+                    { "d41a5d3e-a74e-493b-8d9e-d79efac2c872", "5da2704f-4baf-430e-a2a6-e12c98ff05de", "Editor", "EDITOR" },
+                    { "d4f8aafd-7caf-4c38-9b0c-30ae1cb3b1e6", "e0cf81d7-141d-4ea7-b30d-f05de19695a7", "User", "USER" }
+                });
 
             migrationBuilder.InsertData(
-                table: "AspNetRoles",
-                columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
-                values: new object[] { "cb5a35d9-0fd2-4fd1-982a-2851f56fa28c", "64d2a0b3-bd6d-4ab9-8439-ed5f4cb38b76", "Editor", "EDITOR" });
+                table: "Products",
+                columns: new[] { "Id", "Description", "ImageName", "Price", "Title" },
+                values: new object[] { -1, "The best mobile phone on the market", null, 400.99m, "Samsung X" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
@@ -210,6 +246,11 @@ namespace EcommAlgebra.Migrations
                 column: "NormalizedUserName",
                 unique: true,
                 filter: "[NormalizedUserName] IS NOT NULL");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ProductCategory_ProductId",
+                table: "ProductCategory",
+                column: "ProductId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -230,10 +271,16 @@ namespace EcommAlgebra.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
+                name: "ProductCategory");
+
+            migrationBuilder.DropTable(
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");
+
+            migrationBuilder.DropTable(
+                name: "Products");
         }
     }
 }

@@ -65,7 +65,7 @@ namespace EcommAlgebra.Areas.Admin.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create(ApplicationUser model)
+        public async Task<IActionResult> Create(UserCreateModel model)
         {
             if (ModelState.IsValid)
             {
@@ -80,7 +80,7 @@ namespace EcommAlgebra.Areas.Admin.Controllers
                 };
 
                 // Create the user in the database
-                var result = await _userManager.CreateAsync(user, model.PasswordHash);
+                var result = await _userManager.CreateAsync(user, model.Password);
 
                 if (result.Succeeded)
                 {
@@ -184,6 +184,53 @@ namespace EcommAlgebra.Areas.Admin.Controllers
             return RedirectToAction(nameof(Index));
         }
 
+
+        //[HttpPost]
+        //public async Task<IActionResult> Delete(string id)
+        //{
+        //    var user = await _userManager.FindByIdAsync(id);
+
+        //    if (user == null)
+        //    {
+        //        // User not found, return to the user list 
+        //        return RedirectToAction(nameof(Index));
+        //    }
+
+
+
+        //    var result = await _userManager.DeleteAsync(user);
+
+        //    if (result.Succeeded)
+        //    {
+        //        // User deleted successfully, return to the user list 
+        //        return RedirectToAction(nameof(Index));
+        //    }
+        //    else
+        //    {
+        //        // If there are errors during deletion, add them to ModelState and return to the view
+        //        foreach (var error in result.Errors)
+        //        {
+        //            ModelState.AddModelError("Error, cannot delete user", error.Description);
+        //        }
+
+        //        return View(nameof(Index));
+        //    }
+        //}
+
+        [HttpPost]
+        public IActionResult Delete(string id)
+        {
+            var user = _context.Users.FirstOrDefault(u => u.Id == id);
+            if (user == null)
+            {
+                return NotFound();
+            }
+
+            _context.Users.Remove(user);
+            _context.SaveChanges();
+
+            return RedirectToAction("Index"); // Assuming Index action shows the list of users
+        }
 
     }
 }

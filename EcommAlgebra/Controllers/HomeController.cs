@@ -1,4 +1,5 @@
-﻿using EcommAlgebra.Models;
+﻿using EcommAlgebra.Data;
+using EcommAlgebra.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 
@@ -6,16 +7,18 @@ namespace EcommAlgebra.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
+        private ApplicationDbContext _context;  
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(ApplicationDbContext context)
         {
-            _logger = logger;
+            _context = context; 
         }
 
         public IActionResult Index()
         {
-            return View();
+            var products = _context.Products.ToList();
+
+            return View(products);
         }
 
         public IActionResult Privacy()

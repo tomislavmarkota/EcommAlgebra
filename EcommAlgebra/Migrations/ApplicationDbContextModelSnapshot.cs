@@ -45,9 +45,11 @@ namespace EcommAlgebra.Migrations
                         .HasColumnType("bit");
 
                     b.Property<string>("FirstName")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("LastName")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("LockoutEnabled")
@@ -96,6 +98,64 @@ namespace EcommAlgebra.Migrations
                     b.ToTable("AspNetUsers", (string)null);
                 });
 
+            modelBuilder.Entity("EcommAlgebra.Models.Product", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ImageName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<decimal>("Price")
+                        .HasColumnType("decimal(9,2)");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Products");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = -1,
+                            Description = "The best mobile phone on the market",
+                            Price = 400.99m,
+                            Title = "Samsung X"
+                        });
+                });
+
+            modelBuilder.Entity("EcommAlgebra.Models.ProductCategory", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<int>("CategoryId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ProductId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ProductId");
+
+                    b.ToTable("ProductCategory");
+                });
+
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
                 {
                     b.Property<string>("Id")
@@ -125,22 +185,22 @@ namespace EcommAlgebra.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "cb5a35d9-0fd2-4fd1-982a-2851f56fa28c",
-                            ConcurrencyStamp = "64d2a0b3-bd6d-4ab9-8439-ed5f4cb38b76",
+                            Id = "d41a5d3e-a74e-493b-8d9e-d79efac2c872",
+                            ConcurrencyStamp = "5da2704f-4baf-430e-a2a6-e12c98ff05de",
                             Name = "Editor",
                             NormalizedName = "EDITOR"
                         },
                         new
                         {
-                            Id = "a3c76568-0602-4774-b052-d9b185d138e6",
-                            ConcurrencyStamp = "c291bc58-1bef-40d2-aecf-dc6680909e6d",
+                            Id = "ae520a59-0b53-4a2d-9eeb-8ce803ae0dcf",
+                            ConcurrencyStamp = "e6d24b71-659e-4b0a-ac1a-21e8b5bc1d78",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
-                            Id = "4953c498-ca8e-4c1d-afee-2c4fa63cd46d",
-                            ConcurrencyStamp = "cabc0627-881b-43eb-a7ed-f10c58609503",
+                            Id = "d4f8aafd-7caf-4c38-9b0c-30ae1cb3b1e6",
+                            ConcurrencyStamp = "e0cf81d7-141d-4ea7-b30d-f05de19695a7",
                             Name = "User",
                             NormalizedName = "USER"
                         });
@@ -256,6 +316,15 @@ namespace EcommAlgebra.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
+            modelBuilder.Entity("EcommAlgebra.Models.ProductCategory", b =>
+                {
+                    b.HasOne("EcommAlgebra.Models.Product", null)
+                        .WithMany("ProductCategories")
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
@@ -305,6 +374,11 @@ namespace EcommAlgebra.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("EcommAlgebra.Models.Product", b =>
+                {
+                    b.Navigation("ProductCategories");
                 });
 #pragma warning restore 612, 618
         }

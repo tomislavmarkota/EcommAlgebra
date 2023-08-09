@@ -1,6 +1,8 @@
 using EcommAlgebra.Data;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Localization;
 using Microsoft.EntityFrameworkCore;
+using System.Globalization;
 
 namespace EcommAlgebra
 {
@@ -46,6 +48,19 @@ namespace EcommAlgebra
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();
+
+            var cultureInfo = new CultureInfo("hr-HR");
+            cultureInfo.NumberFormat.NumberDecimalSeparator = ".";
+            cultureInfo.NumberFormat.CurrencyDecimalSeparator = ".";
+
+            // konfiguracija lokalizacije
+            app.UseRequestLocalization(new RequestLocalizationOptions
+            {
+                DefaultRequestCulture = new RequestCulture(cultureInfo),
+                SupportedCultures = new List<CultureInfo> { cultureInfo },
+                SupportedUICultures = new List<CultureInfo> { cultureInfo },
+
+            });
 
             app.UseRouting();
 
