@@ -45,17 +45,23 @@ namespace EcommAlgebra.Areas.Admin.Controllers
 
             if (ModelState.IsValid)
             {
-                //pronaći lokaciju gdje ću spremitit sliku
-                string wwwRootPath = "wwwroot";
-                // ime fajla
-                string fileName = product.ImageFile.FileName;
-                product.ImageName = fileName;
-                string path = wwwRootPath + "/Images/" + fileName;
-                // spremiti na file system
-
-                using (var fileStream = new FileStream(path, FileMode.Create))
+                
+            
+                if (product.ImageFile != null)
                 {
-                    product.ImageFile.CopyTo(fileStream);
+                    
+                    string wwwRootPath = "wwwroot";
+                    string fileName = Path.GetFileName(product.ImageFile.FileName);
+                    string uniqueFileName = Guid.NewGuid().ToString() + "_" + fileName; // Add a unique identifier
+
+                    product.ImageName = uniqueFileName;
+                    string path = Path.Combine(wwwRootPath, "Images", uniqueFileName);
+
+                    // Save the file to the unique path
+                    using (var fileStream = new FileStream(path, FileMode.Create))
+                    {
+                        product.ImageFile.CopyTo(fileStream);
+                    }
                 }
 
                 // spremiti u bazu

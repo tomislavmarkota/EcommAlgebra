@@ -31,6 +31,8 @@ namespace EcommAlgebra.Data
         }
 
         public DbSet<Product> Products { get; set; }
+        public DbSet<Category> Category { get; set; }
+        public DbSet<ProductCategory> ProductCategory { get; set; }
     }
 
     public class ApplicationUser : IdentityUser

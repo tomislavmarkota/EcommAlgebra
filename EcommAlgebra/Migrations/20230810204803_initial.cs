@@ -52,6 +52,19 @@ namespace EcommAlgebra.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Category",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Title = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Category", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Products",
                 columns: table => new
                 {
@@ -186,6 +199,12 @@ namespace EcommAlgebra.Migrations
                 {
                     table.PrimaryKey("PK_ProductCategory", x => x.Id);
                     table.ForeignKey(
+                        name: "FK_ProductCategory_Category_CategoryId",
+                        column: x => x.CategoryId,
+                        principalTable: "Category",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
                         name: "FK_ProductCategory_Products_ProductId",
                         column: x => x.ProductId,
                         principalTable: "Products",
@@ -198,9 +217,9 @@ namespace EcommAlgebra.Migrations
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
                 values: new object[,]
                 {
-                    { "ae520a59-0b53-4a2d-9eeb-8ce803ae0dcf", "e6d24b71-659e-4b0a-ac1a-21e8b5bc1d78", "Admin", "ADMIN" },
-                    { "d41a5d3e-a74e-493b-8d9e-d79efac2c872", "5da2704f-4baf-430e-a2a6-e12c98ff05de", "Editor", "EDITOR" },
-                    { "d4f8aafd-7caf-4c38-9b0c-30ae1cb3b1e6", "e0cf81d7-141d-4ea7-b30d-f05de19695a7", "User", "USER" }
+                    { "08706466-86b1-4d5a-9650-ea721e54fa2b", "a2058c9d-6311-4e09-985c-5db8704898c9", "Admin", "ADMIN" },
+                    { "a0ad6b7f-3f6f-44e9-a974-7cabd0e6ed38", "89427c82-cbea-49fc-a1bd-98159c4c4c25", "User", "USER" },
+                    { "f2555ef7-f19d-4c3e-941f-6ce64b6c419e", "3c80a6e6-4483-4f59-bbfe-93923d55b4b4", "Editor", "EDITOR" }
                 });
 
             migrationBuilder.InsertData(
@@ -248,6 +267,11 @@ namespace EcommAlgebra.Migrations
                 filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
+                name: "IX_ProductCategory_CategoryId",
+                table: "ProductCategory",
+                column: "CategoryId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_ProductCategory_ProductId",
                 table: "ProductCategory",
                 column: "ProductId");
@@ -278,6 +302,9 @@ namespace EcommAlgebra.Migrations
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");
+
+            migrationBuilder.DropTable(
+                name: "Category");
 
             migrationBuilder.DropTable(
                 name: "Products");

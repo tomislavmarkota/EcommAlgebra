@@ -98,6 +98,24 @@ namespace EcommAlgebra.Migrations
                     b.ToTable("AspNetUsers", (string)null);
                 });
 
+            modelBuilder.Entity("EcommAlgebra.Models.Category", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Category");
+                });
+
             modelBuilder.Entity("EcommAlgebra.Models.Product", b =>
                 {
                     b.Property<int>("Id")
@@ -151,6 +169,8 @@ namespace EcommAlgebra.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("CategoryId");
+
                     b.HasIndex("ProductId");
 
                     b.ToTable("ProductCategory");
@@ -185,22 +205,22 @@ namespace EcommAlgebra.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "d41a5d3e-a74e-493b-8d9e-d79efac2c872",
-                            ConcurrencyStamp = "5da2704f-4baf-430e-a2a6-e12c98ff05de",
+                            Id = "f2555ef7-f19d-4c3e-941f-6ce64b6c419e",
+                            ConcurrencyStamp = "3c80a6e6-4483-4f59-bbfe-93923d55b4b4",
                             Name = "Editor",
                             NormalizedName = "EDITOR"
                         },
                         new
                         {
-                            Id = "ae520a59-0b53-4a2d-9eeb-8ce803ae0dcf",
-                            ConcurrencyStamp = "e6d24b71-659e-4b0a-ac1a-21e8b5bc1d78",
+                            Id = "08706466-86b1-4d5a-9650-ea721e54fa2b",
+                            ConcurrencyStamp = "a2058c9d-6311-4e09-985c-5db8704898c9",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
-                            Id = "d4f8aafd-7caf-4c38-9b0c-30ae1cb3b1e6",
-                            ConcurrencyStamp = "e0cf81d7-141d-4ea7-b30d-f05de19695a7",
+                            Id = "a0ad6b7f-3f6f-44e9-a974-7cabd0e6ed38",
+                            ConcurrencyStamp = "89427c82-cbea-49fc-a1bd-98159c4c4c25",
                             Name = "User",
                             NormalizedName = "USER"
                         });
@@ -318,6 +338,12 @@ namespace EcommAlgebra.Migrations
 
             modelBuilder.Entity("EcommAlgebra.Models.ProductCategory", b =>
                 {
+                    b.HasOne("EcommAlgebra.Models.Category", null)
+                        .WithMany("ProductCategories")
+                        .HasForeignKey("CategoryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("EcommAlgebra.Models.Product", null)
                         .WithMany("ProductCategories")
                         .HasForeignKey("ProductId")
@@ -374,6 +400,11 @@ namespace EcommAlgebra.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("EcommAlgebra.Models.Category", b =>
+                {
+                    b.Navigation("ProductCategories");
                 });
 
             modelBuilder.Entity("EcommAlgebra.Models.Product", b =>
