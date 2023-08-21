@@ -5,12 +5,13 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using System.Data;
 using System.Security.Claims;
 
 namespace EcommAlgebra.Areas.Admin.Controllers
 {
     [Area("Admin")]
-    [Authorize(Roles = "Admin")]
+    [Authorize(Roles = "Admin, Editor")]
     public class UserController : Controller
     {
         ApplicationDbContext _context;
@@ -185,37 +186,26 @@ namespace EcommAlgebra.Areas.Admin.Controllers
         }
 
 
-        //[HttpPost]
-        //public async Task<IActionResult> Delete(string id)
-        //{
-        //    var user = await _userManager.FindByIdAsync(id);
+        [HttpGet]
+        public IActionResult Details(string id)
+        {
+            var user = _context.Users.FirstOrDefault(u => u.Id == id);
+            if (user == null) return NotFound();
 
-        //    if (user == null)
-        //    {
-        //        // User not found, return to the user list 
-        //        return RedirectToAction(nameof(Index));
-        //    }
+            var roles = _userManager.GetRolesAsync(user).Result;
 
+            var viewModel = new UserViewModel
+            {
+                UserId = user.Id,
+                FirstName = user.FirstName ?? "First name",
+                LastName = user.LastName ?? "Last name",
+                Email = user.Email,
+                Address = user.Address,
+                Role = roles.Count > 0 ? roles[0] : "User"
+            };
 
-
-        //    var result = await _userManager.DeleteAsync(user);
-
-        //    if (result.Succeeded)
-        //    {
-        //        // User deleted successfully, return to the user list 
-        //        return RedirectToAction(nameof(Index));
-        //    }
-        //    else
-        //    {
-        //        // If there are errors during deletion, add them to ModelState and return to the view
-        //        foreach (var error in result.Errors)
-        //        {
-        //            ModelState.AddModelError("Error, cannot delete user", error.Description);
-        //        }
-
-        //        return View(nameof(Index));
-        //    }
-        //}
+            return View(viewModel); 
+        }
 
         [HttpPost]
         public IActionResult Delete(string id)

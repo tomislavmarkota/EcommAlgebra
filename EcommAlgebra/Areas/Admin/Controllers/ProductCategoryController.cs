@@ -7,9 +7,10 @@ using System.Data;
 
 namespace EcommAlgebra.Areas.Admin.Controllers
 {
-   
-        [Area("Admin"), Authorize(Roles = "Admin")]
-        public class ProductCategoryController : Controller
+
+    [Area("Admin")]
+    [Authorize(Roles = "Admin, Editor")]
+    public class ProductCategoryController : Controller
         {
             private ApplicationDbContext _dbContext;
 

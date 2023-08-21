@@ -1,0 +1,12 @@
+﻿@using EcommAlgebra.Data
+@model UserViewModel
+
+
+<h2>User : @Model?.FirstName @Model?.LastName</h2>
+<p>First name: @Model?.FirstName</p>
+<p>Last name: @Model?.LastName</p>
+<p>Address: @Model?.Address</p>
+<p>Role: @Model?.Role</p>
+
+
+<a asp-action="Index">Back to users list</a>

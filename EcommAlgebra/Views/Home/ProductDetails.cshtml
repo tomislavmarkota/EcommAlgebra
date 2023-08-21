@@ -28,19 +28,18 @@
             <div style="max-width: 250px; max-height: 250px; height: 100%;">
                 <img src="@("~/Images/no-image.png")" asp-append-version="true" style="max-height: 100%; max-width: 100%; object-fit: cover;" class="rounded" />
             </div>
-           
+
         }
         else
         {
-             <div style="max-width: 250px; max-height: 250px; height: 100%;">
+            <div style="max-width: 250px; max-height: 250px; height: 100%;">
                 <img src="@("~/Images/"+Model.ImageName)" asp-append-version="true" style="max-height: 100%; max-width: 100%; object-fit: cover;" class="rounded" />
-             </div>
+            </div>
 
         }
     </dl>
 </div>
 
-<div class="d-flex gap-3">
-    <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a>
+<div>
     <a asp-action="Index">Back to product list</a>
 </div>

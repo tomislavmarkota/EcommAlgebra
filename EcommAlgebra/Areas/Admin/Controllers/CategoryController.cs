@@ -8,8 +8,8 @@ namespace EcommAlgebra.Areas.Admin.Controllers
 {
    
         [Area("Admin")]
-        [Authorize(Roles = "Admin")]
-        public class CategoryController : Controller
+        [Authorize(Roles = "Admin, Editor")]
+    public class CategoryController : Controller
         {
             private ApplicationDbContext _dbContext;
 

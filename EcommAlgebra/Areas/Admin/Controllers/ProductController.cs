@@ -1,14 +1,16 @@
 ﻿using EcommAlgebra.Data;
 using EcommAlgebra.Models;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using System.Data;
 
 namespace EcommAlgebra.Areas.Admin.Controllers
 {
     [Area("Admin")]
-    [Authorize(Roles = "Admin")]
+    [Authorize(Roles = "Admin, Editor")]
     public class ProductController : Controller
     {
         ApplicationDbContext _context;
@@ -20,6 +22,8 @@ namespace EcommAlgebra.Areas.Admin.Controllers
         {
             var products = _context.Products.ToList();
             return View(products);
+
+
         }
 
         public IActionResult Details(int id)
@@ -121,6 +125,8 @@ namespace EcommAlgebra.Areas.Admin.Controllers
 
             return View(product);
         }
+
+
         [HttpPost]
         public IActionResult Delete(int id)
         {

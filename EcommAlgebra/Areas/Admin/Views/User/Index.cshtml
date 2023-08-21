@@ -1,4 +1,4 @@
-﻿@using EcommAlgebra.Data
+﻿@*@using EcommAlgebra.Data
 @model IEnumerable<UserViewModel>
 
 <div class="d-flex justify-content-between">
@@ -27,6 +27,9 @@
                 Role
             </th>
             <th>
+                Details
+            </th>
+            <th>
                 Edit
             </th>
             <th>
@@ -45,6 +48,33 @@
                 <td>@user.Address</td>
                 <td>@user.Role</td>
                 <td>
+              
+                    @if (string.IsNullOrWhiteSpace(user.FirstName) || string.IsNullOrWhiteSpace(user.LastName) || string.IsNullOrWhiteSpace(user.Role))
+                    {
+                        <div class="text-danger">
+                            <p>
+                                Details not available because:
+                                @if (string.IsNullOrWhiteSpace(user.FirstName))
+                                {
+                                    <span>Please update your First Name</span>
+                                }
+                                @if (string.IsNullOrWhiteSpace(user.LastName))
+                                {
+                                    <span>Please update your Last Name</span>
+                                }
+                                @if (string.IsNullOrWhiteSpace(user.Role))
+                                {
+                                    <span>Please update your Role</span>
+                                }
+                            </p>
+                        </div>
+                    }
+                    else
+                    {
+                        <a class="btn btn-primary" asp-action="Details" asp-route-id="@user.UserId">DETAILS</a>
+                    }
+                </td>
+                <td>
                     <a class="btn btn-warning" asp-action="Update" asp-route-id="@user.UserId">EDIT</a>
                 </td>
                 <td>
@@ -56,4 +86,90 @@
             </tr>
         }
     </tbody>
-</table>
+</table>*@
+@using EcommAlgebra.Data
+@model IEnumerable<UserViewModel>
+
+<div class="d-flex justify-content-between">
+    <h1>List of users</h1>
+    <a asp-action="Create" class="btn btn-primary" style="height: fit-content">Create new user</a>
+</div>
+<div class="w-100 overflow-auto">
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Email</th>
+                <th>First name</th>
+                <th>Last name</th>
+                <th>Address</th>
+                <th>Role</th>
+                <th>Details</th>
+                <th>Edit</th>
+                <th>Delete</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var user in Model)
+            {
+                <tr>
+                    <td>@user.Email</td>
+                    <td>@user.FirstName</td>
+                    <td>@user.LastName</td>
+                    <td>@user.Address</td>
+                    <td>@user.Role</td>
+                    <td>
+
+                        @if (string.IsNullOrWhiteSpace(user.FirstName) || string.IsNullOrWhiteSpace(user.LastName) || string.IsNullOrWhiteSpace(user.Role))
+                        {
+                            <a class="btn btn-primary details-button"
+                               data-firstname="@user.FirstName"
+                               data-lastname="@user.LastName"
+                               data-role="@user.Role"
+                               onclick="showMissingFieldMessage(this)">DETAILS</a>
+
+                        }
+                        else
+                        {
+                            <a class="btn btn-primary" asp-action="Details" asp-route-id="@user.UserId">DETAILS</a>
+                        }
+                    </td>
+                    <td>
+                        <a class="btn btn-warning" asp-action="Update" asp-route-id="@user.UserId">EDIT</a>
+                    </td>
+                    <td>
+                        <form asp-controller="User" asp-action="Delete" method="post"
+                              onsubmit="return confirm('Are you sure you want to delete this user?');">
+                            <input type="hidden" name="id" value="@user.UserId" />
+                            <button type="submit" class="btn btn-danger">DELETE</button>
+                        </form>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+
+<script>
+    function showMissingFieldMessage(button) {
+        var firstName = button.getAttribute("data-firstname");
+        var lastName = button.getAttribute("data-lastname");
+        var role = button.getAttribute("data-role");
+        var message = "";
+
+        if (firstName.trim() === "") {
+            message += "Please update First Name to see details.\n";
+        }
+        if (lastName.trim() === "") {
+            message += "Please update Last Name to see details.\n";
+        }
+        if (role.trim() === "") {
+            message += "Please update Role to see details.";
+        }
+
+        if (message !== "") {
+            alert(message);
+        }
+    }
+</script>
+

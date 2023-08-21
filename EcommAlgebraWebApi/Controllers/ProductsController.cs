@@ -36,25 +36,27 @@ namespace EcommAlgebraWebApi.Controllers
             }
         }
 
-        // GET: api/Products/5
-        //[HttpGet("{id}")]
-        //public async Task<ActionResult<Product>> GetProduct(int id)
-        //{
-        //  if (_context.Products == null)
-        //  {
-        //      return NotFound();
-        //  }
-        //    var product = await _context.Products.FindAsync(id);
+        //GET: api/Products/5
+        [HttpGet("{id}")]
+        public async Task<ActionResult<Product>> GetProduct(int id)
+        {
+            try {
+                var product = _productRepository.GetProductById(id);
 
-        //    if (product == null)
-        //    {
-        //        return NotFound();
-        //    }
+                if (product == null)
+                {
+                    return NotFound();
+                }
 
-        //    return product;
-        //}
+                return Ok(product);
+            }
+            catch (Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError);
+            }
+        }
 
-       
- 
+
+
     }
 }
