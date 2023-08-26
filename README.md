@@ -45,7 +45,7 @@ email: admin@admin.com
 password: password
 
 
-After you ran **EcommAlgebra** project you can start **EcommAlgebraWebApi** which will open up swagger where you can test endpoints. You can see more info in the API Reference section
+After you ran **EcommAlgebra** project you can start **EcommAlgebraWebApi** which will open up swagger where you can test endpoints. You can see more info in the API reference section
 
 
 
@@ -66,7 +66,7 @@ After you ran **EcommAlgebra** project you can start **EcommAlgebraWebApi** whic
 
 | Parameter | Type     | Description                       |
 | :-------- | :------- | :-------------------------------- |
-| `id`      | `string` | **Required**. Id of item to fetch |
+| `id`      | `string` | **Required**. Id of product to fetch |
 
 
 
